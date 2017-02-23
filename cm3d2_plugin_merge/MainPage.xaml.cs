@@ -6,6 +6,7 @@ using Windows.Foundation;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 を参照してください
 
@@ -16,7 +17,7 @@ namespace cm3d2_plugin_merge
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        bool P_R_Selected = false, E_R_Selected = false;
+        bool P_R_Selected = false, E_R_Selected = false, First_Select = false;
         Windows.Storage.StorageFolder Plugin_Root;
         Windows.Storage.StorageFolder Export_Root;
         List<Lst_File> Lst_Backet;
@@ -31,59 +32,71 @@ namespace cm3d2_plugin_merge
 
         private async void Set_Import_Dir_Click(object sender, RoutedEventArgs e)
         {
-            this.Folder_Path.Text = "";
-            this.Package_List.Items.Clear();
-            this.File_List.Items.Clear();
-
-            var picker = new Windows.Storage.Pickers.FolderPicker();
-            picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.List;
-            picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
-            picker.FileTypeFilter.Add(".");
-
-            Plugin_Root = await picker.PickSingleFolderAsync();
-
-            if (Plugin_Root != null)
+            if (!First_Select)
             {
-                this.Folder_Path.Text = Plugin_Root.Path;
-
-                Lst_Backet = new List<Lst_File>();
-                var Plugin_Folder = await Storage_Control.Get_Item(Plugin_Root);
-                for (int i = 0; i < Plugin_Folder.Count; i++)
-                {
-                    Lst_Backet.Add(new Lst_File(Plugin_Folder[i]));
-                    await Lst_Backet.Last().Get_update_lst();
-                }
-                foreach (var lst in Lst_Backet)
-                {
-                    this.Package_List.Items.Add(lst);
-                }
-
-                File_Backet = new Dictionary<string, CM3D2_PluginFile>();
-                foreach (var Lst in Lst_Backet)
-                {
-                    foreach (var File in Lst.File_List)
-                    {
-                        if (File_Backet.ContainsKey(File.Path))
-                        {
-                            File_Backet[File.Path].File_Add(File);
-                        }
-                        else
-                        {
-                            File_Backet.Add(File.Path, new CM3D2_PluginFile(File.Path, File));
-                            this.File_List.Items.Add(File_Backet[File.Path]);
-                        }
-                    }
-                }
-                this.Status_Bar.Text = Lst_Backet.Count.ToString() + View.GetString("PluginLoaded");
-                P_R_Selected = true;
-                if (E_R_Selected)
-                    this.Do_Merge.IsEnabled = true;
+                this.Set_Import_Dir.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(33, 00, 00, 00));
+                this.Set_Import_Dir.Content = View.GetString("SelectPluginFolder");
+                this.Set_Export_Dir.IsEnabled = true;
+                var message = new MessageDialog(View.GetString("Description"), View.GetString("DescriptionTitle"));
+                await message.ShowAsync();
+                First_Select = true;
             }
             else
             {
-                this.Status_Bar.Text = View.GetString("PluginFolderCenceled");
-                P_R_Selected = false;
-                this.Do_Merge.IsEnabled = false;
+                this.Folder_Path.Text = "";
+                this.Package_List.Items.Clear();
+                this.File_List.Items.Clear();
+
+                var picker = new Windows.Storage.Pickers.FolderPicker();
+                picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.List;
+                picker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.ComputerFolder;
+                picker.FileTypeFilter.Add(".");
+
+                Plugin_Root = await picker.PickSingleFolderAsync();
+
+                if (Plugin_Root != null)
+                {
+                    this.Folder_Path.Text = Plugin_Root.Path;
+
+                    Lst_Backet = new List<Lst_File>();
+                    var Plugin_Folder = await Storage_Control.Get_Item(Plugin_Root);
+                    for (int i = 0; i < Plugin_Folder.Count; i++)
+                    {
+                        Lst_Backet.Add(new Lst_File(Plugin_Folder[i]));
+                        await Lst_Backet.Last().Get_update_lst();
+                    }
+                    foreach (var lst in Lst_Backet)
+                    {
+                        this.Package_List.Items.Add(lst);
+                    }
+
+                    File_Backet = new Dictionary<string, CM3D2_PluginFile>();
+                    foreach (var Lst in Lst_Backet)
+                    {
+                        foreach (var File in Lst.File_List)
+                        {
+                            if (File_Backet.ContainsKey(File.Path))
+                            {
+                                File_Backet[File.Path].File_Add(File);
+                            }
+                            else
+                            {
+                                File_Backet.Add(File.Path, new CM3D2_PluginFile(File.Path, File));
+                                this.File_List.Items.Add(File_Backet[File.Path]);
+                            }
+                        }
+                    }
+                    this.Status_Bar.Text = Lst_Backet.Count.ToString() + View.GetString("PluginLoaded");
+                    P_R_Selected = true;
+                    if (E_R_Selected)
+                        this.Do_Merge.IsEnabled = true;
+                }
+                else
+                {
+                    this.Status_Bar.Text = View.GetString("PluginFolderCenceled");
+                    P_R_Selected = false;
+                    this.Do_Merge.IsEnabled = false;
+                }
             }
         }
 
@@ -140,7 +153,7 @@ namespace cm3d2_plugin_merge
             await Storage_Control.Save_Log(installed, "update.lst", update_lst);
             this.Status_Bar.Text = View.GetString("CreatedUpdatelst");
 
-            var message = new MessageDialog(View.GetString("FinishMsg") ,View.GetString("FinishMsgTitle"));
+            var message = new MessageDialog(View.GetString("FinishMsg"), View.GetString("FinishMsgTitle"));
             await message.ShowAsync();
         }
 

@@ -130,7 +130,7 @@
     <value>出力先フォルダが選択されませんでした。</value>
   </data>
   <data name="FileList.Text" xml:space="preserve">
-    <value>合成されるプラグインのファイル</value>
+    <value>結合されるプラグインのファイル</value>
   </data>
   <data name="FileName.Text" xml:space="preserve">
     <value>ファイル名（相対パス）</value>
@@ -165,7 +165,7 @@
   <data name="SelectExportFolder.Content" xml:space="preserve">
     <value>出力先フォルダの選択</value>
   </data>
-  <data name="SelectPluginFolder.Content" xml:space="preserve">
+  <data name="SelectPluginFolder" xml:space="preserve">
     <value>プラグインフォルダの選択</value>
   </data>
   <data name="StartMarge.Content" xml:space="preserve">
@@ -184,5 +184,24 @@
 Github : https://github.com/yukimochi/CM3D2_Plugin_Merge
 Twitter : @Naoki_Kosaka_
 Web : https://lab.yukimochi.jp/</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>1. カスタムメイド3D2のプラグイン・アップデートのzipファイルを展開します。
+2. 解凍したフォルダ群を1つのフォルダにまとめて格納してください。
+（このまとめたフォルダをプラグインフォルダとします。）
+3. プラグインフォルダを"プラグインフォルダの選択"をクリックして指定します。
+4. 出力先のフォルダを"出力先フォルダの選択"をクリックして指定します。
+5. 必要に応じて、結合元のプラグインの一覧と結合されるプラグインのファイルを確認します。
+6. "結合する"をクリックして、結合処理を行います。
+
+※ 出力先フォルダに"merged_plugin"フォルダが作成され、その中に合成済みプラグインが作成されます。
+※ "性格パック,プラス,with Chu-B Lip向けプラグイン"には、未対応です。
+(フォルダ名に"_oh_"を含むプラグインは、無視されます。)</value>
+  </data>
+  <data name="DescriptionTitle" xml:space="preserve">
+    <value>CM3D2 Plugin Merge Tool の使い方</value>
+  </data>
+  <data name="Howtouse.Content" xml:space="preserve">
+    <value>使い方</value>
   </data>
 </root>
