@@ -175,7 +175,7 @@
     <value>Version</value>
   </data>
   <data name="Copylight" xml:space="preserve">
-    <value>Merge Custom Made 3D2 plug-ins and updaters.
+    <value>Merge Custom Maid 3D2 plugins and updates.
 This application is not licensed by KISS.
 
 This software is released under the MIT License.
@@ -186,7 +186,7 @@ Twitter: @Naoki_Kosaka_
 Web: https://lab.yukimochi.jp/</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>1. Unzip the plug-in/update zip file of Custom Made 3D2.
+    <value>1. Unzip the plug-in/update zip file of Custom Maid 3D2.
 2. Store the unzipped folders grouped together in one folder.
 (We will name this grouped folder "Plugin folder".)
 3. Specify the plugin folder by clicking "Select Plugin folder".

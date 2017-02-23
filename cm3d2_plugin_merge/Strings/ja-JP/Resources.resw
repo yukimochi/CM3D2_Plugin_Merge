@@ -148,7 +148,7 @@
     <value>プラグインフォルダが選択されませんでした。</value>
   </data>
   <data name="PluginList.Text" xml:space="preserve">
-    <value>検出されたのプラグイン一覧</value>
+    <value>検出されたプラグイン一覧</value>
   </data>
   <data name="PluginLoaded" xml:space="preserve">
     <value>のプラグインを読み込みました。</value>

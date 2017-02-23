@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="CM3D2PluginMergeTool" Publisher="CN=YUKIMOCHI SOFTWARE" Version="0.5.1.0" />
+  <Identity Name="28120YUKIMOCHI.CM3D2PluginMargeTool" Publisher="CN=D79B18D1-E92E-4CB9-957A-AC5D1AF3CEF6" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="f1e40bc9-4b2f-446d-a234-63b8bc2b0ff0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>CM3D2 Plugin Merge Tool</DisplayName>
+    <DisplayName>CM3D2 Plugin Marge Tool</DisplayName>
     <PublisherDisplayName>YUKIMOCHI SOFTWARE</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="cm3d2_plugin_merge.App">
-      <uap:VisualElements DisplayName="CM3D2 Plugin Merge Tool" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="This app providing updater merging for Custom maid 3D2. This app is not authorized by KISS." BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="CM3D2 Plugin Marge Tool" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="This app providing updater merging for Custom maid 3D2. This app is not authorized by KISS." BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" ShortName="CM3D2 Plugin Marge Tool" Square310x310Logo="Assets\Square310x310Logo.png" Square71x71Logo="Assets\Square71x71Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="wide310x150Logo" />
