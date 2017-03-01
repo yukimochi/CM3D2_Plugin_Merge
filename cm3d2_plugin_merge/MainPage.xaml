@@ -28,7 +28,7 @@
             <TextBox x:Name="Folder_Path" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Margin="10,10" IsEnabled="False" Grid.Column="1" />
             <Button x:Name="Set_Export_Dir" x:Uid="SelectExportFolder" Content="Select Export Folder" Margin="10,5" IsEnabled="False" HorizontalAlignment="Stretch" Grid.Column="2" Click="Set_Export_Dir_Click" />
             <TextBox x:Name="Export_Path" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Margin="10,10" IsEnabled="False" Grid.Column="3" />
-            <Button x:Name="Do_Merge" x:Uid="StartMarge" Content="Start Merge" Margin="10,5" Click="Newest_Files_Click" HorizontalAlignment="Stretch" Grid.Column="4" IsEnabled="False"/>
+            <Button x:Name="Do_Merge" x:Uid="StartMerge" Content="Start Merge" Margin="10,5" Click="Newest_Files_Click" HorizontalAlignment="Stretch" Grid.Column="4" IsEnabled="False"/>
             <Button x:Name="CopyLight" Content="©" Margin="10,5" HorizontalAlignment="Stretch" Grid.Column="5" Click="CopyLight_Click" />
         </Grid>
         <Grid Margin="10" Grid.Row="1">

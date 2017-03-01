@@ -24,7 +24,7 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>155A59DEB553A1B5C562B2227FCBE0225F141898</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>720DCB2C42E7EC0051EF5AC13423188D584E0961</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -98,9 +98,14 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="cm3d2_plugin_merge_StoreKey.pfx" />
+    <None Include="cm3d2_plugin_merge_TemporaryKey.pfx" />
     <None Include="project.json" />
-    <PRIResource Include="Strings\ja-JP\Resources.resw" />
-    <PRIResource Include="Strings\en-US\Resources.resw" />
+    <PRIResource Include="Strings\ja-JP\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Strings\en-US\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -117,7 +122,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="cm3d2_plugin_merge_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
@@ -164,7 +168,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
-    <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Resource\readme.txt" />
   </ItemGroup>

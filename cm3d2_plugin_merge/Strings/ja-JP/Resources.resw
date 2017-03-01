@@ -168,7 +168,7 @@
   <data name="SelectPluginFolder" xml:space="preserve">
     <value>プラグインフォルダの選択</value>
   </data>
-  <data name="StartMarge.Content" xml:space="preserve">
+  <data name="StartMerge.Content" xml:space="preserve">
     <value>結合する</value>
   </data>
   <data name="Version.Text" xml:space="preserve">

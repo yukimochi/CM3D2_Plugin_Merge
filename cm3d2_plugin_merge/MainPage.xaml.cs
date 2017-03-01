@@ -132,7 +132,7 @@ namespace cm3d2_plugin_merge
             Prog.Maximum = File_Backet.Count;
             string update_lst = "";
             this.Status_Bar.Text = View.GetString("CreateExportDir");
-            var installed = await Export_Root.CreateFolderAsync("marged_plugin", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+            var installed = await Export_Root.CreateFolderAsync("merged_plugin", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             var data_dir = await installed.CreateFolderAsync("data", Windows.Storage.CreationCollisionOption.ReplaceExisting);
             var Sorted_List = new SortedDictionary<string, CM3D2_PluginFile>(File_Backet);
             foreach (var item in Sorted_List)
@@ -175,7 +175,7 @@ namespace cm3d2_plugin_merge
 
         private async void CopyLight_Click(object sender, RoutedEventArgs e)
         {
-            var message = new MessageDialog(View.GetString("Copylight"), "CM3D2 Plugin Marge Tool");
+            var message = new MessageDialog(View.GetString("Copylight"), "CM3D2 Plugin Merge Tool");
             await message.ShowAsync();
         }
 

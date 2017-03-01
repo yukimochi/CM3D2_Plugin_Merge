@@ -168,7 +168,7 @@
   <data name="SelectPluginFolder" xml:space="preserve">
     <value>Select Plugin folder</value>
   </data>
-  <data name="StartMarge.Content" xml:space="preserve">
+  <data name="StartMerge.Content" xml:space="preserve">
     <value>Start merge</value>
   </data>
   <data name="Version.Text" xml:space="preserve">
