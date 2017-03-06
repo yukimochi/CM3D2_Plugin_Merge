@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="28120YUKIMOCHI.CM3D2PluginMargeTool" Publisher="CN=D79B18D1-E92E-4CB9-957A-AC5D1AF3CEF6" Version="1.1.1.0" />
+  <Identity Name="28120YUKIMOCHI.CM3D2PluginMargeTool" Publisher="CN=D79B18D1-E92E-4CB9-957A-AC5D1AF3CEF6" Version="1.2.0.0" />
   <mp:PhoneIdentity PhoneProductId="f1e40bc9-4b2f-446d-a234-63b8bc2b0ff0" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>CM3D2 Plugin Merge Tool</DisplayName>

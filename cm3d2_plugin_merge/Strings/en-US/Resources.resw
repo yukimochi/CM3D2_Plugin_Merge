@@ -186,16 +186,23 @@ Twitter: @Naoki_Kosaka_
 Web: https://lab.yukimochi.jp/</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>1. Unzip the plug-in/update zip file of Custom Maid 3D2.
-2. Store the unzipped folders grouped together in one folder.
-(We will name this grouped folder "Plugin folder".)
-3. Specify the plugin folder by clicking "Select Plugin folder".
-4. Specify the export folder by clicking "Select Export folder".
-5. If necessary, check the List of detected plugins and the List of files merging.
-6. Click "Start merge" to perform the merge process.
+    <value>[1] &lt;ready plug-ins folder&gt;
+1-1 If the DLC, updates, plug-ins
+ 1. Unzip the plug-in/update zip file of Custom Maid 3D2.
+ 2. Store the unzipped folders grouped together in one folder.
+ (We will name this grouped folder "Plugin folder".)
+1-2 If the DVD Plugin (add personality, Visual Pack and PLUS)
+ 1. Under the Plugin folder create a new folder each plugin.
+ 2. Copy All contents of a DVD in the folder.
+[2] &lt;CM3D2 Plugin Merge Tool operations&gt;
+1. When combining an edition 32 bits, Click "x64" on the right of "Select Plugin folder" and it's changed to "x86".
+2. Specify the plugin folder by clicking "Select Plugin folder".
+3. Specify the export folder by clicking "Select Export folder".
+4. If necessary, check the List of detected plugins and the List of files merging.
+5. Click "Start merge" to perform the merge process.
 
-* A "merged_plugin" folder is created in the export folder, and a merged plug-in is created in that folder.
-* "Personality pack, plus, plug-in for with Chu-B Lip" is not supported.
+* A "merged_plugin" folder is created in the export folder, and a merged plugin is created in that folder.
+* "with Chu-B Lip plugins, VR patche" are not supported.
 (Plugins containing "_oh _" in the folder name are ignored.)</value>
   </data>
   <data name="DescriptionTitle" xml:space="preserve">

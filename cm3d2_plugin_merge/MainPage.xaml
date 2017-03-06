@@ -18,18 +18,20 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="0.75*" />
                 <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="Set_Import_Dir" x:Uid="Howtouse" Content="How to use" Click="Set_Import_Dir_Click" Margin="10,5" HorizontalAlignment="Stretch" Grid.Column="0" Background="#33FF0000" />
-            <TextBox x:Name="Folder_Path" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Margin="10,10" IsEnabled="False" Grid.Column="1" />
-            <Button x:Name="Set_Export_Dir" x:Uid="SelectExportFolder" Content="Select Export Folder" Margin="10,5" IsEnabled="False" HorizontalAlignment="Stretch" Grid.Column="2" Click="Set_Export_Dir_Click" />
-            <TextBox x:Name="Export_Path" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Margin="10,10" IsEnabled="False" Grid.Column="3" />
-            <Button x:Name="Do_Merge" x:Uid="StartMerge" Content="Start Merge" Margin="10,5" Click="Newest_Files_Click" HorizontalAlignment="Stretch" Grid.Column="4" IsEnabled="False"/>
-            <Button x:Name="CopyLight" Content="©" Margin="10,5" HorizontalAlignment="Stretch" Grid.Column="5" Click="CopyLight_Click" />
+            <Button x:Name="Set_Import_Dir" x:Uid="Howtouse" Content="How to use" Click="Set_Import_Dir_Click" Margin="0,5" HorizontalAlignment="Stretch" Grid.Column="0" Background="#33FF0000" />
+            <Button x:Name="IsX64_Btn" Content="x64" Margin="0,5" HorizontalAlignment="Stretch" Grid.Column="1" Click="IsX64_Click" />
+            <TextBox x:Name="Folder_Path" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Margin="10,10" IsEnabled="False" Grid.Column="2" />
+            <Button x:Name="Set_Export_Dir" x:Uid="SelectExportFolder" Content="Select Export Folder" Margin="0,5" IsEnabled="False" HorizontalAlignment="Stretch" Grid.Column="3" Click="Set_Export_Dir_Click" />
+            <TextBox x:Name="Export_Path" TextWrapping="Wrap" Text="" VerticalAlignment="Stretch" Margin="10,10" IsEnabled="False" Grid.Column="4" />
+            <Button x:Name="Do_Merge" x:Uid="StartMerge" Content="Start Merge" Margin="0,5" Click="Newest_Files_Click" HorizontalAlignment="Stretch" Grid.Column="5" IsEnabled="False"/>
+            <Button x:Name="CopyLight" Content="©" Margin="10,5" HorizontalAlignment="Stretch" Grid.Column="6" Click="CopyLight_Click" />
         </Grid>
         <Grid Margin="10" Grid.Row="1">
             <Grid Grid.Column="1">

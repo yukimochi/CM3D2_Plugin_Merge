@@ -17,7 +17,7 @@ namespace cm3d2_plugin_merge
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        bool P_R_Selected = false, E_R_Selected = false, First_Select = false;
+        bool P_R_Selected = false, E_R_Selected = false, First_Select = false, IsX64 = true;
         Windows.Storage.StorageFolder Plugin_Root;
         Windows.Storage.StorageFolder Export_Root;
         List<Lst_File> Lst_Backet;
@@ -59,11 +59,11 @@ namespace cm3d2_plugin_merge
                     this.Folder_Path.Text = Plugin_Root.Path;
 
                     Lst_Backet = new List<Lst_File>();
-                    var Plugin_Folder = await Storage_Control.Get_Item(Plugin_Root);
+                    var Plugin_Folder = await Storage_Control.Get_Item(Plugin_Root, IsX64);
                     for (int i = 0; i < Plugin_Folder.Count; i++)
                     {
-                        Lst_Backet.Add(new Lst_File(Plugin_Folder[i]));
-                        await Lst_Backet.Last().Get_update_lst();
+                        Lst_Backet.Add(new Lst_File(Plugin_Folder[i], Plugin_Root));
+                        await Lst_Backet.Last().Get_update_lst(Plugin_Root, IsX64);
                     }
                     foreach (var lst in Lst_Backet)
                     {
@@ -75,14 +75,14 @@ namespace cm3d2_plugin_merge
                     {
                         foreach (var File in Lst.File_List)
                         {
-                            if (File_Backet.ContainsKey(File.Path))
+                            if (File_Backet.ContainsKey(File.Ex_Path))
                             {
-                                File_Backet[File.Path].File_Add(File);
+                                File_Backet[File.Ex_Path].File_Add(File);
                             }
                             else
                             {
-                                File_Backet.Add(File.Path, new CM3D2_PluginFile(File.Path, File));
-                                this.File_List.Items.Add(File_Backet[File.Path]);
+                                File_Backet.Add(File.Ex_Path, new CM3D2_PluginFile(File.Ex_Path, File));
+                                this.File_List.Items.Add(File_Backet[File.Ex_Path]);
                             }
                         }
                     }
@@ -128,6 +128,9 @@ namespace cm3d2_plugin_merge
 
         private async void Newest_Files_Click(object sender, RoutedEventArgs e)
         {
+            this.Set_Import_Dir.IsEnabled = false;
+            this.Set_Export_Dir.IsEnabled = false;
+            this.Do_Merge.IsEnabled = false;
             Prog.Value = 0;
             Prog.Maximum = File_Backet.Count;
             string update_lst = "";
@@ -145,7 +148,7 @@ namespace cm3d2_plugin_merge
                 }
                 this.Status_Bar.Text = View.GetString("Copying") + " : " + item.Key;
                 var dir = await Storage_Control.Get_Folder(dirstr, data_dir);
-                await (await item.Value.File_List.First().SourceFile()).CopyAsync(dir);
+                await (await item.Value.File_List.First().SourceFile(Plugin_Root)).CopyAsync(dir);
                 update_lst += item.Value.File_List.First().Lst_Line + Environment.NewLine;
                 Prog.Value++;
             }
@@ -153,6 +156,10 @@ namespace cm3d2_plugin_merge
             await Storage_Control.Save_Log(installed, "update.lst", update_lst);
             this.Status_Bar.Text = View.GetString("CreatedUpdatelst");
 
+
+            this.Set_Import_Dir.IsEnabled = true;
+            this.Set_Export_Dir.IsEnabled = true;
+            this.Do_Merge.IsEnabled = true;
             var message = new MessageDialog(View.GetString("FinishMsg"), View.GetString("FinishMsgTitle"));
             await message.ShowAsync();
         }
@@ -166,11 +173,25 @@ namespace cm3d2_plugin_merge
                 this.Package_Name.Text = View.GetString("PluginNameCS") + " : " + Selected.Plugin_Name;
                 foreach (var Package in Selected.File_List)
                 {
-                    this.Package_Path.Text += Package.Path + Environment.NewLine;
+                    this.Package_Path.Text += Package.Ex_Path + Environment.NewLine;
                     this.Package_Version.Text += Package.Version + Environment.NewLine;
                 }
             }
 
+        }
+
+        private void IsX64_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsX64)
+            {
+                IsX64 = false;
+                this.IsX64_Btn.Content = "x86";
+            }
+            else
+            {
+                IsX64 = true;
+                this.IsX64_Btn.Content = "x64";
+            }
         }
 
         private async void CopyLight_Click(object sender, RoutedEventArgs e)

@@ -7,7 +7,7 @@ namespace cm3d2_plugin_merge
 {
     static class Storage_Control
     {
-        public static async Task<List<Windows.Storage.StorageFolder>> Get_Item(Windows.Storage.StorageFolder folder)
+        public static async Task<List<Windows.Storage.StorageFolder>> Get_Item(Windows.Storage.StorageFolder folder, bool IsX64)
         {
             var items = await folder.GetFoldersAsync();
             var f = new List<Windows.Storage.StorageFolder>();
@@ -20,29 +20,39 @@ namespace cm3d2_plugin_merge
                 }
                 else
                 {
-                    if (await Get_update(items[i]))
+                    if (await Get_update(items[i], IsX64))
                     {
                         f.Add(items[i]);
                     }
                     else
                     {
-                        f.AddRange(await Get_Item(items[i]));
+                        f.AddRange(await Get_Item(items[i], IsX64));
                     }
                 }
             }
             return f;
         }
 
-        public static async Task<bool> Get_update(Windows.Storage.StorageFolder folder)
+        public static async Task<bool> Get_update(Windows.Storage.StorageFolder folder, bool IsX64)
         {
             var items = await folder.GetFilesAsync();
             var update = false;
 
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Name == "update.lst")
+                if (IsX64)
                 {
-                    update = true;
+                    if (items[i].Name == "update.lst" || items[i].Name == "update_x64.lst")
+                    {
+                        update = true;
+                    }
+                }
+                else
+                {
+                    if (items[i].Name == "update.lst" || items[i].Name == "update_x86.lst")
+                    {
+                        update = true;
+                    }
                 }
             }
             return update;

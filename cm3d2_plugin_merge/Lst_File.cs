@@ -9,19 +9,30 @@ namespace cm3d2_plugin_merge
     class Lst_File
     {
         public string Plugin_Name { get; private set; }
-        public Windows.Storage.StorageFolder Path { get; private set; }
+        public string Path { get; private set; }
         public Windows.Storage.StorageFile Update_lst { get; private set; }
         public List<CM3D2_File> File_List = new List<CM3D2_File>();
 
-        public Lst_File(Windows.Storage.StorageFolder current)
+        public Lst_File(Windows.Storage.StorageFolder current, Windows.Storage.StorageFolder root)
         {
-            Path = current;
-            Plugin_Name = Path.Path.Split('\\').Last();
+            Path = current.Path.Replace(root.Path + "\\", "");
+
+            Plugin_Name = Path.Split('\\').Last();
         }
 
-        public async Task Get_update_lst()
+        public async Task Get_update_lst(Windows.Storage.StorageFolder current,bool IsX64)
         {
-            Update_lst = await Path.GetFileAsync("update.lst");
+            if ((Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update.lst")) ==null)
+            {
+                if (IsX64)
+                {
+                    Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update_x64.lst");
+                }
+                else
+                {
+                    Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update_x86.lst");
+                }
+            }
             using (var lst_stream = new StringReader(await Windows.Storage.FileIO.ReadTextAsync(Update_lst)))
             {
                 string lst_line;
@@ -55,26 +66,57 @@ namespace cm3d2_plugin_merge
     class CM3D2_File : IComparable
     {
         public string Lst_Line { get; private set; }
-        public string Path { get; private set; }
-        public Windows.Storage.StorageFolder SourceFolder { get; private set; }
+        public string Plg_Path { get; private set; }
+        public string Ex_Path { get; private set; }
+        public string SourceFolder { get; private set; }
         public int Version { get; private set; }
         public string Parent { get; private set; }
 
+        private bool NeedUp;
+
         private Windows.Storage.StorageFile _SourceFile;
 
-        public CM3D2_File(string parent, string lst_raw, Windows.Storage.StorageFolder folder)
+        public CM3D2_File(string parent, string lst_raw, string folder)
         {
             Parent = parent;
             Lst_Line = lst_raw;
-            Path = lst_raw.Split(',')[2];
+            Ex_Path = lst_raw.Split(',')[2];
             Version = int.Parse(lst_raw.Split(',')[5]);
             SourceFolder = folder;
-        }
-        public async Task<Windows.Storage.StorageFile> SourceFile()
-        {
-            if (_SourceFile == null)
+            if (lst_raw.Split(',')[0] == "share")
             {
-                _SourceFile = await SourceFolder.GetFileAsync("data\\" + Path.ToString());
+                Plg_Path = lst_raw.Split(',')[1];
+                if(Plg_Path.Contains("../"))
+                {
+                    Plg_Path = Plg_Path.Replace("../", "");
+                    NeedUp = true;
+                }
+            }
+        }
+        public async Task<Windows.Storage.StorageFile> SourceFile(Windows.Storage.StorageFolder current)
+        {
+            if (Plg_Path == null)
+            {
+                _SourceFile = await current.GetFileAsync(SourceFolder + "\\data\\" + Ex_Path);
+            }
+            else
+            {
+                var Dirs = SourceFolder.Split('\\');
+                string New_Path = "";
+                if (NeedUp)
+                {
+                    for (int i = 0; i < Dirs.Count() - 1; i++)
+                    {
+                        New_Path += Dirs[i] + "\\";
+                    }
+                }
+                else
+                {
+                    New_Path = SourceFolder + "\\";
+                }
+                _SourceFile = await current.GetFileAsync(New_Path + Plg_Path);
+                var New_Lst = Lst_Line.Split(',');
+                Lst_Line = "0,0," + New_Lst[2] + "," + New_Lst[3] + "," + New_Lst[4] + "," + New_Lst[5];
             }
             return _SourceFile;
         }
