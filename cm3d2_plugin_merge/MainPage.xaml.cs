@@ -133,35 +133,53 @@ namespace cm3d2_plugin_merge
             this.Do_Merge.IsEnabled = false;
             Prog.Value = 0;
             Prog.Maximum = File_Backet.Count;
-            string update_lst = "";
-            this.Status_Bar.Text = View.GetString("CreateExportDir");
-            var installed = await Export_Root.CreateFolderAsync("merged_plugin", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            var data_dir = await installed.CreateFolderAsync("data", Windows.Storage.CreationCollisionOption.ReplaceExisting);
-            var Sorted_List = new SortedDictionary<string, CM3D2_PluginFile>(File_Backet);
-            foreach (var item in Sorted_List)
+            try
             {
-                var branch = item.Value.File_Name.Split('\\');
-                string dirstr = "";
-                for (int i = 0; i < branch.Count() - 1; i++)
+                string update_lst = "";
+                this.Status_Bar.Text = View.GetString("CreateExportDir");
+                var installed = await Export_Root.CreateFolderAsync("merged_plugin", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+                var data_dir = await installed.CreateFolderAsync("data", Windows.Storage.CreationCollisionOption.ReplaceExisting);
+                var Sorted_List = new SortedDictionary<string, CM3D2_PluginFile>(File_Backet);
+                foreach (var item in Sorted_List)
                 {
-                    dirstr += branch[i] + "\\";
+                    var branch = item.Value.File_Name.Split('\\');
+                    string dirstr = "";
+                    for (int i = 0; i < branch.Count() - 1; i++)
+                    {
+                        dirstr += branch[i] + "\\";
+                    }
+                    this.Status_Bar.Text = View.GetString("Copying") + " : " + item.Key;
+                    var dir = await Storage_Control.Get_Folder(dirstr, data_dir);
+                    await (await item.Value.File_List.First().SourceFile(Plugin_Root)).CopyAsync(dir);
+                    update_lst += item.Value.File_List.First().Lst_Line + Environment.NewLine;
+                    Prog.Value++;
                 }
-                this.Status_Bar.Text = View.GetString("Copying") + " : " + item.Key;
-                var dir = await Storage_Control.Get_Folder(dirstr, data_dir);
-                await (await item.Value.File_List.First().SourceFile(Plugin_Root)).CopyAsync(dir);
-                update_lst += item.Value.File_List.First().Lst_Line + Environment.NewLine;
-                Prog.Value++;
+                await Storage_Control.Place_readme(installed);
+                await Storage_Control.Save_Log(installed, "update.lst", update_lst);
+                this.Status_Bar.Text = View.GetString("CreatedUpdatelst");
+
+
+                this.Set_Import_Dir.IsEnabled = true;
+                this.Set_Export_Dir.IsEnabled = true;
+                this.Do_Merge.IsEnabled = true;
+                var message = new MessageDialog(View.GetString("FinishMsg"), View.GetString("FinishMsgTitle"));
+                await message.ShowAsync();
             }
-            await Storage_Control.Place_readme(installed);
-            await Storage_Control.Save_Log(installed, "update.lst", update_lst);
-            this.Status_Bar.Text = View.GetString("CreatedUpdatelst");
+            catch (Exception)
+            {
+                Prog.Value = 0;
 
-
-            this.Set_Import_Dir.IsEnabled = true;
-            this.Set_Export_Dir.IsEnabled = true;
-            this.Do_Merge.IsEnabled = true;
-            var message = new MessageDialog(View.GetString("FinishMsg"), View.GetString("FinishMsgTitle"));
-            await message.ShowAsync();
+                this.Status_Bar.Text = View.GetString("IOErrorTest");
+                E_R_Selected = false;
+                this.Export_Path.Text = "";
+                P_R_Selected = false;
+                this.Folder_Path.Text = "";
+                this.Set_Import_Dir.IsEnabled = true;
+                this.Set_Export_Dir.IsEnabled = true;
+                this.Do_Merge.IsEnabled = false;
+                var message = new MessageDialog(View.GetString("IOErrorString"), View.GetString("IOErrorTest"));
+                await message.ShowAsync();
+            }
         }
 
         private void Package_List_SelectionChanged(object sender, SelectionChangedEventArgs e)

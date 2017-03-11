@@ -211,4 +211,10 @@ Web : https://lab.yukimochi.jp/</value>
   <data name="Howtouse.Content" xml:space="preserve">
     <value>使い方</value>
   </data>
+  <data name="IOErrorString" xml:space="preserve">
+    <value>ファイルが存在しないか、保存先のディスク容量が足りません。</value>
+  </data>
+  <data name="IOErrorTest" xml:space="preserve">
+    <value>ファイルのコピー中にエラーが発生しました。</value>
+  </data>
 </root>
