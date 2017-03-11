@@ -22,24 +22,32 @@ namespace cm3d2_plugin_merge
 
         public async Task Get_update_lst(Windows.Storage.StorageFolder current,bool IsX64)
         {
-            if ((Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update.lst")) ==null)
+            try
             {
-                if (IsX64)
+                if ((Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update.lst")) == null)
                 {
-                    Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update_x64.lst");
+                    if (IsX64)
+                    {
+                        Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update_x64.lst");
+                    }
+                    else
+                    {
+                        Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update_x86.lst");
+                    }
                 }
-                else
+                using (var lst_stream = new StringReader(await Windows.Storage.FileIO.ReadTextAsync(Update_lst)))
                 {
-                    Update_lst = (Windows.Storage.StorageFile)await current.TryGetItemAsync(Path + "\\update_x86.lst");
+                    string lst_line;
+                    while ((lst_line = lst_stream.ReadLine()) != null)
+                    {
+                        File_List.Add(new CM3D2_File(Plugin_Name, lst_line, Path));
+                    }
                 }
             }
-            using (var lst_stream = new StringReader(await Windows.Storage.FileIO.ReadTextAsync(Update_lst)))
+            catch (Exception)
             {
-                string lst_line;
-                while ((lst_line = lst_stream.ReadLine()) != null)
-                {
-                    File_List.Add(new CM3D2_File(Plugin_Name, lst_line, Path));
-                }
+                Plugin_Name = "Error : "+ Plugin_Name;
+                File_List = new List<CM3D2_File>();
             }
         }
 
